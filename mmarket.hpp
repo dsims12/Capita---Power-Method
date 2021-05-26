@@ -4,20 +4,55 @@
 #include <array>
 
 template<typename T>
-void mm_read(char *filename, sparse_matrix<T> &OutMatrix){
+sparse_matrix<T> mm_read(char *filename){
     int i, j;
     double k;
     
     std::ifstream InputFile;
     InputFile.open(filename);
-    //To scrap and read the first line to check if it's symmetric
-    while (InputFile.peek() == '%') InputFile.ignore(100, '\n');  //ignore -> first parameter max # char to ignore, \n ignores until the end of the line
+    std::string line;
 
-    InputFile >> i >> j >> k; //First 3 are the information (rows, columns, nonzeros)-(Still have to decide what to do with it)
+    std::getline(InputFile, line);
+    //debug
+    //std::cout << line << std::endl;
 
-    while(InputFile>> i >> j >> k){
-        OutMatrix.modify_element(i, j, k);
-    };
+    if(line.find("symmetric") != std::string::npos){       
+        while (InputFile.peek() == '%'){                // Peek checks the first character in the string
+            InputFile.ignore(2024, '\n');               //Ignores the number of characters (2024) or until the end of the line
+        };
 
+        InputFile >> i >> j >> k;
+
+        sparse_matrix<T> OutMatrix(i,j);
+
+        while(InputFile>> i >> j >> k){
+            OutMatrix.modify_element(i, j, k);
+            OutMatrix.modify_element(j, i, k);
+        };
+        return OutMatrix;
+    }else {
+        //debug
+        //std::cout << "OI 1" << std::endl;
+        //std::getline(InputFile, line);
+        //std::cout << line << std::endl;
+        while(InputFile.peek() == '%'){
+            //debug
+            //std::cout << "OI 2" << std::endl;
+            InputFile.ignore(2024, '\n');
+        };
+        //debug
+        //std::cout << "OI 3" << std::endl;
+        InputFile >> i >> j >> k;
+
+        sparse_matrix<T> OutMatrix(i,j);
+
+        while(InputFile >> i >> j >> k){
+            //debug
+            //std::cout << "OI 4" << std::endl;
+            OutMatrix.modify_element(i, j, k);
+        }; 
+        return OutMatrix;
+    }
+    
     InputFile.close();
 }

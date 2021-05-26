@@ -1,5 +1,5 @@
-#ifndef  sparse.hpp
-#define  sparse.hpp
+#ifndef  sparse
+#define  sparse
 #include <vector>
 #include <cassert>
 #include <iostream>
@@ -25,8 +25,8 @@ class sparse_matrix{
 
 
         value_type operator() (size_type i, size_type j) const{
-            assert(i <= r_ && j <= c_);
-            for(int k = 0; k<values_.size(); k++){
+            //assert(i <= r_ && j <= c_);
+            for(unsigned int k = 0; k<values_.size(); k++){
                 if(i == rows_[k] && j == columns_[k]){
                     return values_[k];
                     break;
@@ -36,8 +36,8 @@ class sparse_matrix{
         }//assignment operator
 
         void modify_element(size_type i, size_type j, value_type v){
-            assert(i <= r_ && j <= c_);
-            for(int k = 0; k<values_.size(); k++){
+            //assert(i <= r_ && j <= c_);
+            for(unsigned int k = 0; k<values_.size(); k++){
                 if(i == rows_[k] && j == columns_[k]){
                     values_[k] = v;
                     break;
@@ -50,7 +50,7 @@ class sparse_matrix{
 
         void rem_element(size_type i,size_type j){
             assert(i <= r_ && j <= c_);
-            for(int k = 0; k<values_.size(); k++){
+            for(unsigned int k = 0; k<values_.size(); k++){
                 if(i == rows_[k] && j == columns_[k]){
                     values_.erase(values_.begin() + k);
                     columns_.erase(columns_.begin() + k);
@@ -60,24 +60,28 @@ class sparse_matrix{
         }//Removes an element by erasing its position from the containers
 
 
-        void multiply(std::vector<value_type> const &X, std::vector<value_type> &Y){
+        std::vector<value_type> multiply(std::vector<value_type> const &X){
+            //int m = columns_.size();
+            std::vector<value_type> Y(c_);
             assert(X.size() == Y.size());
-            for(int k = 0; k < values_.size(); k++){
+            for(unsigned int k = 0; k < values_.size(); k++){
                 Y[rows_[k]-1] += values_[k] * X[columns_[k]-1];
             }
+            return Y;
         }//Multiplies the matrix by a vector
 
         int rows_number(){
             return r_;
         }//Returns the number of nonzero rows
-
+ 
         int columns_number(){
             return c_;
         }//Returns the number of nonzero columns
 
-    private:
+    public:
         size_type r_;
         size_type c_;
+    private:
         std::vector<value_type> rows_;
         std::vector<value_type> columns_;
         std::vector<value_type> values_;
