@@ -60,7 +60,7 @@ class sparse_matrix{
         }//Removes an element by erasing its position from the containers
 
 
-        std::vector<value_type> multiply(std::vector<value_type> const &X){
+        std::vector<value_type> multiply_vector(std::vector<value_type> const &X){
             //int m = columns_.size();
             std::vector<value_type> Y(c_);
             assert(X.size() == Y.size());
@@ -69,6 +69,41 @@ class sparse_matrix{
             }
             return Y;
         }//Multiplies the matrix by a vector
+
+        std::vector<value_type> multiply_AtA(std::vector<value_type> const &X){
+            //int m = columns_.size();
+            std::vector<value_type> Y(c_);
+            std::vector<value_type> Aux(c_);
+            assert(X.size() == Y.size());
+            for(unsigned int k = 0; k < values_.size(); k++){
+                Aux[rows_[k]-1] += values_[k] * X[columns_[k]-1];
+            }
+
+            for(unsigned int k = 0; k < values_.size(); k++){
+                Y[columns_[k]-1] += values_[k] * Aux[rows_[k]-1];
+            }
+
+            return Y;
+        }//Multiplies A^t*A by vector
+
+        std::vector<value_type> multiply_AAt(std::vector<value_type> const &X){
+            //int m = columns_.size();
+            std::vector<value_type> Y(c_);
+            std::vector<value_type> Aux(c_);
+            assert(X.size() == Y.size());
+            for(unsigned int k = 0; k < values_.size(); k++){
+                Aux[columns_[k]-1] += values_[k] * X[rows_[k]-1];
+            }
+
+            for(unsigned int k = 0; k < values_.size(); k++){
+                Y[rows_[k]-1] += values_[k] * Aux[columns_[k]-1];
+            }
+
+            return Y;
+        }//Multiplies A*A^t by vector
+
+        typedef std::vector<value_type> (*multiply) (std::vector<value_type> const &X);
+
 
         int rows_number(){
             return r_;

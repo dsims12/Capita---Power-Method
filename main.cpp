@@ -52,7 +52,10 @@ int main(){
     //Testing the Power Method
     std::vector<double> eig(5);
 
-    eig = power_method(B);
+    //1 - A
+    //2 - AtA
+    //3 - AAt
+    eig = power_method(A, 2);
     std::cout << "Biggest Eigenvector:" << std::endl;
     print(eig);
 
