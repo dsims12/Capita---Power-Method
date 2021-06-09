@@ -26,8 +26,12 @@ sparse_matrix<T> mm_read(char *filename){
         sparse_matrix<T> OutMatrix(i,j);
 
         while(InputFile>> i >> j >> k){
-            OutMatrix.modify_element(i, j, k);
-            OutMatrix.modify_element(j, i, k);
+            if (i==j){
+               OutMatrix.modify_element(i, j, k);
+            }else{
+                OutMatrix.modify_element(i, j, k);
+                OutMatrix.modify_element(j, i, k);
+            };
         };
         return OutMatrix;
     }else {
@@ -43,7 +47,8 @@ sparse_matrix<T> mm_read(char *filename){
         //debug
         //std::cout << "OI 3" << std::endl;
         InputFile >> i >> j >> k;
-
+        //debug
+        //std::cout << i << j << k << std::endl;
         sparse_matrix<T> OutMatrix(i,j);
 
         while(InputFile >> i >> j >> k){

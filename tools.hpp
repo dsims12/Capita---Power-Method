@@ -10,7 +10,7 @@
 Function: prints a vector
 *********************************/
 template<typename T>
-void print(std::vector<T> const &v){
+inline void print(std::vector<T> const &v){
     std::cout<<"[ ";
     for(unsigned int i=0; i<v.size(); ++i) {
         std::cout<<v[i]<<" ";
@@ -23,7 +23,7 @@ void print(std::vector<T> const &v){
 Function: Normalizes a vector
 **************************************/
 template<typename T>
-std::vector<T> vec_normalize(std::vector<T> &V){
+inline std::vector<T> vec_normalize(std::vector<T> &V){
     int m = V.size();
     std::vector<double> V_norm(m, 0);
     double norm = 0.0;
@@ -48,7 +48,7 @@ Function: Compares two vectors and outputs
           the biggest distance between them
 *********************************************/
 template<typename T>
-double vec_difference(std::vector<T> &v1, std::vector<T> &v2){
+inline double vec_difference(std::vector<T> &v1, std::vector<T> &v2){
     assert(v1.size() == v2.size());
 
     int m = v1.size();
@@ -64,5 +64,23 @@ double vec_difference(std::vector<T> &v1, std::vector<T> &v2){
 
     return max_dif;
 }
+
+/********************************************
+Function: Computes the inner product between
+          two vectors
+*********************************************/
+template<typename T>
+inline T vec_product(std::vector<T> &v1, std::vector<T> &v2){
+    assert(v1.size() == v2.size());
+
+    T vf = 0;
+
+    for(unsigned int i = 0; i < v1.size(); i++){ 
+
+        vf += v1[i]*v2[i];
+    }
+    return vf;
+}
+
 
 #endif
