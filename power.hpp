@@ -1,3 +1,7 @@
+/*************************************************
+sparse.hpp : This file contains the power method
+            function.
+*************************************************/
 #include "sparse.hpp"
 #include "tools.hpp"
 
@@ -6,7 +10,6 @@ T power_method(sparse_matrix<T> &M, std::vector<T> &lambda,  int n){
     int m = M.rows_number();
     //debug
     //std::cout << m << std::endl;   
-    //std::vector<double> lambda(m,0);
     std::vector<double> b(m,0);
     std::vector<double> V(m, 1);
 
@@ -30,17 +33,18 @@ T power_method(sparse_matrix<T> &M, std::vector<T> &lambda,  int n){
         //debug
         //print(lambda);
         //print(V);
-        if(vec_difference(V, lambda) < 1e-8){           //Stopping criterion        
+        if(vec_difference(V, lambda) < 1e-5){           //Stopping criterion        
            break;
         }  
         V = lambda;
         //debug
-        std::cout << "Iter: " << n << std::endl;
+        //std::cout << "Iter: " << n << std::endl;
+        //std::cout << Eigenvector: << std::endl;
+        //print(lambda)
 
         w1 = vec_product(b, V);                       //Rayleigh quotient to get the Biggest Eigenvalue
         w2 = vec_product(V, V); 
         eig = w1/w2;
-
         //debug
         //std::cout << "Biggest Eigenvalue:" << eig <<std::endl;
         }
@@ -62,11 +66,12 @@ T power_method(sparse_matrix<T> &M, std::vector<T> &lambda,  int n){
         V = lambda;
         //debug
         //std::cout << "Iter: " << n << std::endl;
+        //std::cout << Eigenvector: << std::endl;
+        //print(lambda)
 
         w1 = vec_product(b, V);                       //Rayleigh quotient to get the Biggest Eigenvalue
         w2 = vec_product(V, V); 
         eig = w1/w2;
-
         //debug
         //std::cout << "Biggest Eigenvalue:" << eig <<std::endl;
         }
@@ -80,6 +85,7 @@ T power_method(sparse_matrix<T> &M, std::vector<T> &lambda,  int n){
         lambda = vec_normalize(lambda);                //Normalizes lambda
 
         //debug
+        //std::cout << "Iter: " << n << std::endl;
         //print(lambda);
         //print(V);
         if(vec_difference(V, lambda) < 1e-5){          //Stopping criterion
@@ -88,11 +94,12 @@ T power_method(sparse_matrix<T> &M, std::vector<T> &lambda,  int n){
         V = lambda;
         //debug
         //std::cout << "Iter: " << n << std::endl;
-
+        //std::cout << Eigenvector: << std::endl;
+        //print(lambda)
+        
         w1 = vec_product(b, V);                       //Rayleigh quotient to get the Biggest Eigenvalue
         w2 = vec_product(V, V); 
         eig = w1/w2;
-
         //debug
         //std::cout << "Biggest Eigenvalue:" << eig <<std::endl;
         }

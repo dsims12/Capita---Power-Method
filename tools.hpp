@@ -1,3 +1,8 @@
+/**************************************
+tools.hpp : This file contains several 
+            functions that do vector
+            operations
+***************************************/
 #ifndef tools
 #define tools
 #include <vector>

@@ -1,3 +1,7 @@
+/*************************************************
+sparse.hpp : This file contains the sparse matrix
+            class with all its members functions.
+*************************************************/
 #ifndef  sparse
 #define  sparse
 #include <vector>
@@ -61,7 +65,6 @@ class sparse_matrix{
 
 
         inline std::vector<value_type> multiply_vector(std::vector<value_type> const &X){
-            //int m = columns_.size();
             std::vector<value_type> Y(c_);
             assert(X.size() == Y.size());
             for(unsigned int k = 0; k < values_.size(); k++){
@@ -71,7 +74,6 @@ class sparse_matrix{
         }//Multiplies the matrix by a vector
 
         inline std::vector<value_type> multiply_AtA(std::vector<value_type> const &X){
-            //int m = columns_.size();
             std::vector<value_type> Y(c_);
             std::vector<value_type> Aux(c_);
             assert(X.size() == Y.size());
@@ -87,7 +89,6 @@ class sparse_matrix{
         }//Multiplies A^t*A by vector
 
         inline std::vector<value_type> multiply_AAt(std::vector<value_type> const &X){
-            //int m = columns_.size();
             std::vector<value_type> Y(c_);
             std::vector<value_type> Aux(c_);
             assert(X.size() == Y.size());
